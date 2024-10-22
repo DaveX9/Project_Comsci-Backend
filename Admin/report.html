@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        aside {
+            width: 200px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        aside ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        aside ul li {
+            padding: 10px 0;
+            cursor: pointer;
+        }
+
+        aside ul li.active {
+            background-color: #d0d0d0;
+            font-weight: bold;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .toolbar, .content, .buttons {
+            margin-bottom: 20px;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .toolbar button {
+            margin-left: 10px;
+            padding: 5px 10px;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .content div {
+            padding: 20px;
+            background-color: #e0e0e0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .buttons {
+            text-align: center;
+        }
+
+        .buttons button {
+            margin: 0 10px;
+            padding: 10px 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <aside>
+        <ul>
+            <li>Admin</li>
+            <li>Dashboard</li>
+            <li>ข้อมูลผู้ป่วย</li>
+            <li>ข้อมูล นศ. / อาจารย์ / บุคลากร</li>
+            <li>ยา</li>
+            <li>นัดหมอ</li>
+            <li>แก้ไขข่าวสาร</li>
+            <li>คำขอยืมกระเป๋าพยาบาล</li>
+            <li class="active">รายงาน</li>
+            <li>การตั้งค่า</li>
+            <li>ออกจากระบบ</li>
+        </ul>
+    </aside>
+    <main>
+        <section class="toolbar">
+            <div class="import">
+                <label>Import: </label>
+                <button>ปุ่ม excel</button>
+                <button>ปุ่ม mysql</button>
+            </div>
+            <div class="export">
+                <label>Export: </label>
+                <button>Word</button>
+                <button>PDF</button>
+                <button>PowerPoint</button>
+                <button>Excel</button>
+            </div>
+        </section>
+        <section class="content">
+            <div class="data-list">
+                <h3>รายงานข้อมูล</h3>
+                <!-- Dynamic Data List -->
+            </div>
+            <div class="report">
+                <h3>กราฟ, infographic</h3>
+                <!-- Graphical Content -->
+            </div>
+            <div class="data-options">
+                <h3>ข้อมูล</h3>
+                <label><input type="checkbox"> รายงานการใช้อุปกรณ์</label>
+                <label><input type="checkbox"> รายงานข้อมูลการเบิกจ่าย</label>
+                <label><input type="checkbox"> รายงานข้อมูลสถิติการใช้งาน</label>
+                <label><input type="checkbox"> รายงานข้อมูลการจัดเก็บยา</label>
+                <button>+ รายงานเพิ่มเติม</button>
+            </div>
+            <div class="graph-tools">
+                <h3>เครื่องมือปรับแต่งกราฟ</h3>
+                <label><input type="checkbox"> กราฟแท่ง</label>
+                <label><input type="checkbox"> กราฟเส้น</label>
+                <label><input type="checkbox"> กราฟโดนัท</label>
+                <label><input type="checkbox"> กราฟวงกลม</label>
+                <label><input type="checkbox"> กราฟแท่งแบบซ้อนกัน</label>
+                <label><input type="checkbox"> KPI</label>
+                <label><input type="checkbox"> เกจ</label>
+                <label><input type="checkbox"> กราฟพื้นที่</label>
+                <label><input type="checkbox"> การผสมกราฟ</label>
+                <label><input type="checkbox"> ตัวเลข</label>
+            </div>
+        </section>
+        <div class="buttons">
+            <button>ลบ</button>
+            <button>ย้อนกลับ</button>
+            <button>บันทึก</button>
+        </div>
+    </main>
+    <script>
+                document.addEventListener('DOMContentLoaded', function() {
+            // Logic to handle import, export, and data display
+            
+            const importExcelButton = document.querySelector('.import button:nth-child(2)');
+            const importMysqlButton = document.querySelector('.import button:nth-child(3)');
+            
+            importExcelButton.addEventListener('click', function() {
+                // Handle Excel file import
+                alert('Import Excel file');
+            });
+            
+            importMysqlButton.addEventListener('click', function() {
+                // Handle MySQL file import
+                alert('Import MySQL file');
+            });
+            
+            // Similar logic for export buttons
+            
+            const dataList = document.querySelector('.data-list');
+            const report = document.querySelector('.report');
+            
+            // Dynamically populate the data list and report section
+        });
+
+    </script>
+</body>
+</html>

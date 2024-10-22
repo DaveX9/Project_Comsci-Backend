@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drug Data Warehouse</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+        }
+        
+        .container {
+            display: flex;
+            width: 100%;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        
+        .sidebar .profile-pic {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+        }
+        
+        .sidebar nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .sidebar nav ul li {
+            margin: 10px 0;
+            padding: 10px;
+            cursor: pointer;
+        }
+        
+        .sidebar nav ul li.active {
+            background-color: #ddd;
+        }
+        
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        
+        .content h1 {
+            margin-top: 0;
+        }
+        
+        .search-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .search-box label {
+            margin-right: 10px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .add-btn, .bulk-delete-btn {
+            margin-left: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        table th {
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+        
+        .edit-btn, .delete-btn {
+            margin-right: 5px;
+        }
+        
+        .delete-icon {
+            display: none;
+        }
+        
+        .show-delete-icons .delete-icon {
+            display: inline;
+        }
+        
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            padding-top: 100px; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4); 
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+        
+            .content {
+                padding: 10px;
+            }
+        
+            .search-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        
+            .button-group {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="profile-pic"></div>
+            <nav>
+                <ul>
+                    <li>Admin</li>
+                    <li>Dashboard</li>
+                    <li>ข้อมูลผู้ป่วย</li>
+                    <li>ข้อมูล นักศึกษา/อาจารย์/บุคลากร</li>
+                    <li class="active">ยา</li>
+                    <li>คลังข้อมูลยา</li>
+                    <li>คลังข้อมูลเวชภัณฑ์ที่ไม่ใช่ยา</li>
+                    <li>นัดหมาย</li>
+                    <li>แก้ไขข่าวสาร</li>
+                    <li>คำนวณค่ายา กระเป๋าพยาบาล</li>
+                    <li>รายงาน</li>
+                    <li>การตั้งค่า</li>
+                    <li>ออกจากระบบ</li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="content">
+            <h1>คลังข้อมูลยา</h1>
+            <div class="search-box">
+                <label for="search">ค้นหา:</label>
+                <input type="text" id="search" name="search" onkeyup="searchTable()">
+                <div class="button-group">
+                    <button class="add-btn" onclick="window.location.href='addData.html'">เพิ่มข้อมูล</button>
+                    <button class="bulk-delete-btn" onclick="toggleDeleteIcons()">ลบข้อมูล</button>
+                </div>
+            </div>
+            <table id="drug-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(0)">ลำดับ ↑↓</th>
+                        <th onclick="sortTable(1)">รหัส ↑↓</th>
+                        <th>รายละเอียด</th>
+                        <th>ชนิดยา</th>
+                        <th>ปริมาณยา</th>
+                        <th onclick="sortTable(5)">จำนวนคงคลัง ↑↓</th>
+                        <th>หน่วยนับ</th>
+                        <th onclick="sortTable(7)">ราคาต่อหน่วย ↑↓</th>
+                        <th onclick="sortTable(8)">วันหมดอายุ ↑↓</th>
+                        <th onclick="sortTable(9)">สถานะ ↑↓</th>
+                        <th>จัดการ</th>
+                    </tr>
+                </thead>
+                <tbody id="drug-table-body">
+                    <!-- Data rows will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p>คุณแน่ใจหรือว่าต้องการลบข้อมูลนี้?</p>
+            <button id="confirmDeleteBtn" onclick="confirmDelete()">ยืนยัน</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            loadTableData();
+        });
+        
+        function loadTableData() {
+            // Fetch data from the database using AJAX (replace this with actual AJAX call)
+            const data = [
+                { id: 1, code: '001', details: 'ยา A', type: 'ชนิด A', quantity: '100', stock: '50', unit: 'กล่อง', price: '10', expiry: '2025-01-01', status: 'Available' },
+                { id: 2, code: '002', details: 'ยา B', type: 'ชนิด B', quantity: '200', stock: '100', unit: 'ขวด', price: '20', expiry: '2024-01-01', status: 'Unavailable' }
+                // Add more data as needed
+            ];
+        
+            const tableBody = document.getElementById('drug-table-body');
+            tableBody.innerHTML = '';
+        
+            data.forEach((row, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${row.code}</td>
+                    <td>${row.details}</td>
+                    <td>${row.type}</td>
+                    <td>${row.quantity}</td>
+                    <td>${row.stock}</td>
+                    <td>${row.unit}</td>
+                    <td>${row.price}</td>
+                    <td>${row.expiry}</td>
+                    <td>${row.status}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editRow(${row.id})">แก้ไข</button>
+                        <button class="delete-btn" onclick="prepareDelete(${row.id})">ลบ</button>
+                        <span class="delete-icon" data-id="${row.id}" onclick="prepareDelete(${row.id})">❌</span>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+        
+        function searchTable() {
+            const input = document.getElementById('search');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('drug-table');
+            const tr = table.getElementsByTagName('tr');
+        
+            for (let i = 1; i < tr.length; i++) {
+                tr[i].style.display = 'none';
+                const td = tr[i].getElementsByTagName('td');
+                for (let j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        if (td[j].innerHTML.toLowerCase().indexOf(filter) > -1) {
+                            tr[i].style.display = '';
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        let currentSortColumn = -1;
+        let sortAscending = true;
+        
+        function sortTable(columnIndex) {
+            const table = document.getElementById('drug-table');
+            const rows = Array.from(table.rows).slice(1);
+            const sortedRows = rows.sort((a, b) => {
+                const aText = a.cells[columnIndex].innerText;
+                const bText = b.cells[columnIndex].innerText;
+        
+                return sortAscending ? aText.localeCompare(bText) : bText.localeCompare(aText);
+            });
+        
+            sortedRows.forEach(row => table.appendChild(row));
+        
+            if (currentSortColumn === columnIndex) {
+                sortAscending = !sortAscending;
+            } else {
+                sortAscending = true;
+            }
+        
+            currentSortColumn = columnIndex;
+        }
+        
+        function toggleDeleteIcons() {
+            document.getElementById('drug-table').classList.toggle('show-delete-icons');
+        }
+        
+        function prepareDelete(id) {
+            const modal = document.getElementById('confirmModal');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+            confirmDeleteBtn.setAttribute('data-id', id);
+            modal.style.display = 'block';
+        }
+        
+        function confirmDelete() {
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+            const id = confirmDeleteBtn.getAttribute('data-id');
+            deleteRow(id);
+            closeModal();
+            alert('ลบเรียบร้อยแล้ว');
+        }
+        
+        function deleteRow(id) {
+            // Perform AJAX call to delete row from database (replace this with actual AJAX call)
+            console.log(`Deleting row with id: ${id}`);
+            // Remove row from table
+            const rows = document.querySelectorAll(`#drug-table tbody tr`);
+            rows.forEach(row => {
+                if (row.querySelector(`.delete-icon[data-id="${id}"]`)) {
+                    row.remove();
+                }
+            });
+        }
+        
+        function editRow(id) {
+            // Redirect to the edit page with the row id (replace this with actual redirection)
+            window.location.href = `editData.html?id=${id}`;
+        }
+        
+        function closeModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+        
+    </script>
+</body>
+</html>

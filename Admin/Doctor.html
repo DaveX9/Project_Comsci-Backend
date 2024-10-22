@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor's Appointment Management System</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s;
+        }
+        /**************start sidebar***************/
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 100%;
+            background-color: #003366;
+            color: white;
+            padding: 10px 0;
+            box-sizing: border-box;
+            transition: width 0.3s;
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul a {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            padding: 10px 10px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar ul a:hover {
+            background-color: #0055a5;
+        }
+
+        .sidebar h1 {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul a:first-child {
+            margin-bottom: 5px;
+            padding: 5px 10px;
+        }
+
+        .image-icon {
+            height: 40px;
+            width: 40px;
+            margin-right: 10px;
+        }
+
+        .image-logo {
+            max-width: 150px;
+            margin: 10px 10px;
+            height: auto;
+            transition: max-width 0.3s, margin 0.3s;
+        }
+
+        .sidebar.collapsed .image-logo {
+            max-width: 40px;
+            margin: 0 auto;
+        }
+        /**************End sidebar*****************/
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 200px;
+            width: calc(100% - 200px);
+            height: 50px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-sizing: border-box;
+            transition: left 0.3s, width 0.3s;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            align-items: center;
+        }
+
+        .navbar li {
+            display: inline;
+        }
+
+        .navbar .menu-icon {
+            margin-right: auto;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .navbar .search-icon,
+        .navbar .notification-icon,
+        .navbar .customize-icon {
+            width: 24px;
+            height: 24px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+        /****************End navbar************************/
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin-bottom: 20px;
+        }
+
+        .user-info, .calendar, .appointment-details {
+            margin-bottom: 20px;
+            background-color: #e9e9e9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input[type="text"],
+        .input-group input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .input-group input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .calendar-header .prev-month, .calendar-header .next-month {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .calendar-body {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .week-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .days-grid div {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .days-grid .has-appointment {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .confirm-button {
+            background-color: #4CAF50;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .cancel-button {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="Admin03.html"><img src="/โฟลเดอร์ใหม่/picture/logo-sa.png" alt="" class="image-logo"></a></li>
+                <li><a href="#"><h1><span id="admin-name">Admin: </span></h1></a></li>
+                <li><a href="Admin03.html"><img src="/โฟลเดอร์ใหม่/picture/dashboard.png" alt="dashboard icon" class="image-icon"><span>Dashboard</span></a></li>
+                <li><a href="/Project Comsci/Admin/Patient/PatientDataPage.html"><img src="/โฟลเดอร์ใหม่/picture/patient-icon.png" alt="" class="image-icon"><span>ข้อมูลผู้ป่วย</span></a></li>
+                <li><a href="PersonalDataPage.html"><img src="/โฟลเดอร์ใหม่/picture/personel.png" alt="" class="image-icon"><span>ข้อมูลส่วนตัว</span></a></li>
+                <li><a href="#"><img src="/โฟลเดอร์ใหม่/picture/medicine.png" alt="" class="image-icon"><span>ยา</span></a></li>
+                <li><a href="#"><img src="/โฟลเดอร์ใหม่/picture/doctor.png" alt="" class="image-icon"><span>นัดหมอ</span></a></li>
+                <li><a href="#"><img src="/โฟลเดอร์ใหม่/picture/newspaper.png" alt="" class="image-icon"><span>แก้ไขข่าวสาร</span></a></li>
+                <li><a href="#"><img src="/โฟลเดอร์ใหม่/picture/medical-case.png" alt="" class="image-icon"><span>คำขอยืมกระเป๋าพยาบาล</span></a></li>
+                <li><a href="#"><img src="/โฟลเดอร์ใหม่/picture/report.png" alt="" class="image-icon"><span>รายงาน</span></a></li>
+                <li><a href="setting.html"><img src="/โฟลเดอร์ใหม่/picture/tools.png" alt="" class="image-icon"><span>การตั้งค่า</span></a></li>
+                <li><a href="#"><img src="/โฟลเดอร์ใหม่/picture/logout.png" alt="" class="image-icon"><span>ออกจากระบบ</span></a></li>
+            </ul>
+        </nav>
+        <nav class="navbar">
+            <ul>
+                <li><img src="/โฟลเดอร์ใหม่/picture/menu.png" alt="Menu" class="menu-icon" onclick="toggleSidebar()"></li>
+                <li style="margin-left:auto;">
+                    <img src="/โฟลเดอร์ใหม่/picture/Serach-icon.png" alt="Search" class="search-icon">
+                    <img src="/โฟลเดอร์ใหม่/picture/notification.png" alt="Notification" class="notification-icon">
+                    <img src="/โฟลเดอร์ใหม่/picture/customize.png" alt="Customize" class="customize-icon" onclick="toggleToolbar()">
+                </li>
+            </ul>
+        </nav>
+        <main class="main-content">
+            <header>
+                <h1>ระบบจัดการข้อมูลการนัดหมอ</h1>
+            </header>
+            <section class="user-info">
+                <div class="input-group">
+                    <label for="first-name">ชื่อ</label>
+                    <input type="text" id="first-name">
+                </div>
+                <div class="input-group">
+                    <label for="last-name">นามสกุล</label>
+                    <input type="text" id="last-name">
+                </div>
+                <div class="input-group">
+                    <label>ประเภท</label>
+                    <div id="type-radio-buttons">
+                        <!-- Radio buttons will be inserted here -->
+                    </div>
+                </div>
+            </section>
+            <section class="calendar">
+                <div class="calendar-header">
+                    <button class="prev-month">&lt;</button>
+                    <span class="month-name">มกราคม</span>
+                    <button class="next-month">&gt;</button>
+                </div>
+                <div class="calendar-body">
+                    <div class="week-days">
+                        <div>อา</div>
+                        <div>จ</div>
+                        <div>อ</div>
+                        <div>พ</div>
+                        <div>พฤ</div>
+                        <div>ศ</div>
+                        <div>ส</div>
+                    </div>
+                    <div class="days-grid">
+                        <!-- Days will be dynamically generated here -->
+                    </div>
+                </div>
+            </section>
+            <section class="appointment-details">
+                <div class="input-group">
+                    <label for="appointment-date">วันที่นัด</label>
+                    <input type="date" id="appointment-date">
+                </div>
+                <div class="input-group">
+                    <label for="appointer-name">ชื่อของผู้ที่นัดหมาย</label>
+                    <input type="text" id="appointer-name">
+                </div>
+                <div class="input-group">
+                    <label for="status">สถานะ</label>
+                    <input type="text" id="status">
+                </div>
+                <button class="confirm-button">ตกลง</button>
+                <button class="cancel-button">ยกเลิกการนัดหมาย</button>
+            </section>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const monthNames = [
+                'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+                'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+            ];
+
+            let currentMonth = new Date().getMonth();
+            let currentYear = new Date().getFullYear();
+
+            const prevMonthBtn = document.querySelector('.prev-month');
+            const nextMonthBtn = document.querySelector('.next-month');
+            const monthNameEl = document.querySelector('.month-name');
+            const daysGridEl = document.querySelector('.days-grid');
+            const typeRadioButtonsEl = document.getElementById('type-radio-buttons');
+
+            function fetchAppointments() {
+                return fetch('fetch_appointments.php')
+                    .then(response => response.json())
+                    .then(data => data);
+            }
+
+            function fetchTypes() {
+                return fetch('fetch_types.php')
+                    .then(response => response.json())
+                    .then(data => data);
+            }
+
+            function updateCalendar(appointments) {
+                monthNameEl.textContent = monthNames[currentMonth];
+                daysGridEl.innerHTML = '';
+
+                const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+                for (let i = 0; i < firstDayOfMonth; i++) {
+                    daysGridEl.appendChild(document.createElement('div'));
+                }
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayEl = document.createElement('div');
+                    dayEl.textContent = day;
+
+                    const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                    if (appointments.includes(dateStr)) {
+                        dayEl.classList.add('has-appointment');
+                    }
+
+                    daysGridEl.appendChild(dayEl);
+                }
+            }
+
+            function updateTypes(types) {
+                typeRadioButtonsEl.innerHTML = '';
+                types.forEach(type => {
+                    const labelEl = document.createElement('label');
+                    labelEl.textContent = type;
+                    const inputEl = document.createElement('input');
+                    inputEl.type = 'radio';
+                    inputEl.name = 'type';
+                    inputEl.value = type;
+                    labelEl.prepend(inputEl);
+                    typeRadioButtonsEl.appendChild(labelEl);
+                });
+            }
+
+            prevMonthBtn.addEventListener('click', () => {
+                if (currentMonth === 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                } else {
+                    currentMonth--;
+                }
+                fetchAppointments().then(updateCalendar);
+            });
+
+            nextMonthBtn.addEventListener('click', () => {
+                if (currentMonth === 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                } else {
+                    currentMonth++;
+                }
+                fetchAppointments().then(updateCalendar);
+            });
+
+            fetchAppointments().then(updateCalendar);
+            fetchTypes().then(updateTypes);
+        });
+    </script>
+</body>
+</html>

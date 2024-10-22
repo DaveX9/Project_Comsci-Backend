@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Other setting</title>
+    <link rel="shortcut icon" href="/โฟลเดอร์ใหม่/picture/logofavicon.ico" type="image/x-icon">
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        
+        .sidebar {
+            width: 180px; /* ลดความกว้างของ sidebar */
+            background-color: #f0f0f0;
+            padding: 10px 0; /* ลด padding */
+            height: 100vh;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0; /* ลด margin */
+        }
+        
+        .sidebar li {
+            padding: 8px 15px; /* ลด padding */
+            font-size: 14px; /* ลดขนาดฟอนต์ */
+        }
+        
+        .sidebar li.active {
+            background-color: #d0d0d0;
+        }
+        
+        .content {
+            padding: 10px; /* ลด padding */
+            flex-grow: 1;
+        }
+        
+        h1, h2 {
+            margin: 10px 0; /* ลด margin */
+            font-size: 18px; /* ลดขนาดฟอนต์ */
+        }
+        
+        .setting-item, .backup-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 0; /* ลด padding */
+            font-size: 14px; /* ลดขนาดฟอนต์ */
+        }
+        
+        .setting-item span, .backup-item label {
+            flex-grow: 1; /* ให้ข้อความกินพื้นที่ที่เหลือ */
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 34px; /* ลดขนาดสวิตช์ */
+            height: 18px; /* ลดขนาดสวิตช์ */
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 18px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px; /* ลดขนาดสไลเดอร์ */
+            width: 14px; /* ลดขนาดสไลเดอร์ */
+            border-radius: 50%;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.4s;
+        }
+        
+        input:checked + .slider {
+            background-color: #4caf50;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(16px); /* ลดระยะการเลื่อน */
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <ul>
+            <li>Admin</li>
+            <li>Dashboard</li>
+            <li>ข้อมูลผู้ป่วย</li>
+            <li>ข้อมูลนักศึกษา/อาจารย์/บุคลากร</li>
+            <li>ยา</li>
+            <li>นัดหมาย</li>
+            <li>แก้ไขเวลารักษา</li>
+            <li>คำนวณค่ายาและกระเป๋า</li>
+            <li>รายงาน</li>
+            <li class="active">การตั้งค่า</li>
+            <li>ออกจากระบบ</li>
+        </ul>
+    </div>
+    <div class="content">
+        <h1>การตั้งค่า</h1>
+        <h2>อื่นๆ</h2>
+        <div class="setting-item">
+            <span>รองรับการใช้งานสำหรับผู้พิการ เช่นการอ่านหน้าจอด้วยเสียง (screen reader)</span>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="setting-item">
+            <span>รองรับการซูมหาเว็บ</span>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="setting-item">
+            <span>รองรับแฟ้มพิมพ์ลัด</span>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="setting-item">
+            <span>ธีม</span>
+            <select>
+                <option value="light">สว่าง</option>
+                <option value="dark">มืด</option>
+            </select>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add any JavaScript interactions here
+        });
+        
+    </script>
+</body>
+</html>

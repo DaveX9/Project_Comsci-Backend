@@ -1,0 +1,197 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+		<script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+		<script type="text/javascript">
+			window.tailwind.config = {
+				darkMode: ['class'],
+				theme: {
+					extend: {
+						colors: {
+							border: 'hsl(var(--border))',
+							input: 'hsl(var(--input))',
+							ring: 'hsl(var(--ring))',
+							background: 'hsl(var(--background))',
+							foreground: 'hsl(var(--foreground))',
+							primary: {
+								DEFAULT: 'hsl(var(--primary))',
+								foreground: 'hsl(var(--primary-foreground))'
+							},
+							secondary: {
+								DEFAULT: 'hsl(var(--secondary))',
+								foreground: 'hsl(var(--secondary-foreground))'
+							},
+							destructive: {
+								DEFAULT: 'hsl(var(--destructive))',
+								foreground: 'hsl(var(--destructive-foreground))'
+							},
+							muted: {
+								DEFAULT: 'hsl(var(--muted))',
+								foreground: 'hsl(var(--muted-foreground))'
+							},
+							accent: {
+								DEFAULT: 'hsl(var(--accent))',
+								foreground: 'hsl(var(--accent-foreground))'
+							},
+							popover: {
+								DEFAULT: 'hsl(var(--popover))',
+								foreground: 'hsl(var(--popover-foreground))'
+							},
+							card: {
+								DEFAULT: 'hsl(var(--card))',
+								foreground: 'hsl(var(--card-foreground))'
+							},
+						},
+					}
+				}
+			}
+		</script>
+		<style type="text/tailwindcss">
+			@layer base {
+				:root {
+					--background: 0 0% 100%;
+--foreground: 240 10% 3.9%;
+--card: 0 0% 100%;
+--card-foreground: 240 10% 3.9%;
+--popover: 0 0% 100%;
+--popover-foreground: 240 10% 3.9%;
+--primary: 240 5.9% 10%;
+--primary-foreground: 0 0% 98%;
+--secondary: 240 4.8% 95.9%;
+--secondary-foreground: 240 5.9% 10%;
+--muted: 240 4.8% 95.9%;
+--muted-foreground: 240 3.8% 46.1%;
+--accent: 240 4.8% 95.9%;
+--accent-foreground: 240 5.9% 10%;
+--destructive: 0 84.2% 60.2%;
+--destructive-foreground: 0 0% 98%;
+--border: 240 5.9% 90%;
+--input: 240 5.9% 90%;
+--ring: 240 5.9% 10%;
+--radius: 0.5rem;
+				}
+				.dark {
+					--background: 240 10% 3.9%;
+--foreground: 0 0% 98%;
+--card: 240 10% 3.9%;
+--card-foreground: 0 0% 98%;
+--popover: 240 10% 3.9%;
+--popover-foreground: 0 0% 98%;
+--primary: 0 0% 98%;
+--primary-foreground: 240 5.9% 10%;
+--secondary: 240 3.7% 15.9%;
+--secondary-foreground: 0 0% 98%;
+--muted: 240 3.7% 15.9%;
+--muted-foreground: 240 5% 64.9%;
+--accent: 240 3.7% 15.9%;
+--accent-foreground: 0 0% 98%;
+--destructive: 0 62.8% 30.6%;
+--destructive-foreground: 0 0% 98%;
+--border: 240 3.7% 15.9%;
+--input: 240 3.7% 15.9%;
+--ring: 240 4.9% 83.9%;
+				}
+			}
+		</style>
+  </head>
+  <body>
+    <div class="p-6 bg-card text-card-foreground">
+  <h1 class="text-2xl font-bold mb-4">ข้อมูลนักศึกษา/อาจารย์/บุคลากร</h1>
+  <form class="space-y-4">
+    <div class="grid grid-cols-4 gap-4">
+      <div>
+        <label class="block text-sm font-medium" for="title">คำนำหน้า</label>
+        <select id="title" class="mt-1 block w-full border border-input rounded-md">
+          <option>นาย</option>
+          <option>นาง</option>
+          <option>นางสาว</option>
+          <option>ไม่ระบุ</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium" for="first-name">ชื่อ</label>
+        <input id="first-name" type="text" class="mt-1 block w-full border border-input rounded-md" required>
+      </div>
+      <div>
+        <label class="block text-sm font-medium" for="last-name">นามสกุล</label>
+        <input id="last-name" type="text" class="mt-1 block w-full border border-input rounded-md" required>
+      </div>
+      <div>
+        <label class="block text-sm font-medium" for="gender">เพศ</label>
+        <select id="gender" class="mt-1 block w-full border border-input rounded-md">
+          <option>ชาย</option>
+          <option>หญิง</option>
+          <option>ไม่ระบุ</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium" for="id-number">ตัวประชาชน</label>
+        <input id="id-number" type="text" class="mt-1 block w-full border border-input rounded-md">
+      </div>
+      <div>
+        <label class="block text-sm font-medium" for="phone-number">เบอร์โทรศัพท์</label>
+        <input id="phone-number" type="text" class="mt-1 block w-full border border-input rounded-md" required>
+      </div>
+      <div>
+        <label class="block text-sm font-medium" for="birth-date">วันเดือนปีเกิด</label>
+        <input id="birth-date" type="date" class="mt-1 block w-full border border-input rounded-md">
+      </div>
+      <div>
+        <label class="block text-sm font-medium" for="blood-type">หมู่โลหิต</label>
+        <select id="blood-type" class="mt-1 block w-full border border-input rounded-md">
+          <option>A</option>
+          <option>B</option>
+          <option>O</option>
+          <option>AB</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium" for="department">คณะ/สำนัก/หน่วยงาน</label>
+        <select id="department" class="mt-1 block w-full border border-input rounded-md">
+          <option>แผนก</option>
+          <option>แผนกอาหาร</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium" for="position">สายงาน/งาน</label>
+        <input id="position" type="text" class="mt-1 block w-full border border-input rounded-md">
+      </div>
+      <div>
+        <label class="block text-sm font-medium" for="email">อีเมล</label>
+        <input id="email" type="email" class="mt-1 block w-full border border-input rounded-md">
+      </div>
+      <div class="col-span-4">
+        <label class="block text-sm font-medium" for="address">ที่อยู่</label>
+        <textarea id="address" class="mt-1 block w-full border border-input rounded-md"></textarea>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium" for="benefit">สิทธิการรักษา</label>
+        <select id="benefit" class="mt-1 block w-full border border-input rounded-md">
+          <option>สิทธิหลักประกันสุขภาพแห่งชาติ (30 บาทรักษาทุกโรค)</option>
+          <option>สิทธิประกันสังคม</option>
+          <option>สิทธิราชการ</option>
+          <option>อื่นๆ</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium" for="emergency-contact">บุคคลที่สามารถติดต่อได้ในกรณีฉุกเฉิน</label>
+        <div class="space-y-2">
+          <input id="emergency-contact-name" type="text" class="mt-1 block w-full border border-input rounded-md" placeholder="ชื่อ">
+          <input id="emergency-contact-lastname" type="text" class="mt-1 block w-full border border-input rounded-md" placeholder="นามสกุล">
+          <input id="emergency-contact-phone" type="text" class="mt-1 block w-full border border-input rounded-md" placeholder="เบอร์โทร">
+        </div>
+      </div>
+    </div>
+    <div class="flex space-x-4 mt-4">
+      <button type="reset" class="bg-blue-500 text-white py-2 px-4 rounded-md">ลบ</button>
+      <button type="button" class="bg-blue-500 text-white py-2 px-4 rounded-md">แก้ไข</button>
+      <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md">บันทึก</button>
+    </div>
+  </form>
+</div>
+  </body>
+</html>

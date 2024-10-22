@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drug Data Warehouse</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+        }
+        
+        .container {
+            display: flex;
+            width: 100%;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        
+        .sidebar .profile-pic {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+        }
+        
+        .sidebar nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .sidebar nav ul li {
+            margin: 10px 0;
+            padding: 10px;
+            cursor: pointer;
+        }
+        
+        .sidebar nav ul li.active {
+            background-color: #ddd;
+        }
+        
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        
+        .content h1 {
+            margin-top: 0;
+        }
+        
+        .search-box {
+            margin-bottom: 20px;
+        }
+        
+        .search-box label {
+            margin-right: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        table th {
+            background-color: #f9f9f9;
+        }
+        
+        .edit-btn, .delete-btn {
+            margin-right: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="profile-pic"></div>
+            <nav>
+                <ul>
+                    <li>Admin</li>
+                    <li>Dashboard</li>
+                    <li>ข้อมูลผู้ป่วย</li>
+                    <li>ข้อมูล นักศึกษา/อาจารย์/บุคลากร</li>
+                    <li class="active">ยา</li>
+                    <li>คลังข้อมูลยา</li>
+                    <li>คลังข้อมูลเวชภัณฑ์ที่ไม่ใช่ยา</li>
+                    <li>นัดหมาย</li>
+                    <li>แก้ไขข่าวสาร</li>
+                    <li>คำนวณค่ายา กระเป๋าพยาบาล</li>
+                    <li>รายงาน</li>
+                    <li>การตั้งค่า</li>
+                    <li>ออกจากระบบ</li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="content">
+            <h1>คลังข้อมูลยา</h1>
+            <div class="search-box">
+                <label for="search">ค้นหา:</label>
+                <input type="text" id="search" name="search">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ลำดับ ↑↓</th>
+                        <th>รหัส ↑↓</th>
+                        <th>รายละเอียด</th>
+                        <th>ชนิดยา</th>
+                        <th>ปริมาณยา</th>
+                        <th>จำนวนคงคลัง ↑↓</th>
+                        <th>หน่วยนับ</th>
+                        <th>ราคาต่อหน่วย ↑↓</th>
+                        <th>วันหมดอายุ ↑↓</th>
+                        <th>สถานะ ↑↓</th>
+                        <th>จัดการ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1.</td>
+                        <td>รหัส</td>
+                        <td>ชื่อ</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <button class="edit-btn">แก้ไข</button>
+                            <button class="delete-btn">ลบ</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td>รหัส</td>
+                        <td>ชื่อ</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <button class="edit-btn">แก้ไข</button>
+                            <button class="delete-btn">ลบ</button>
+                        </td>
+                    </tr>
+                    <!-- Repeat rows as needed -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+</body>
+</html>
